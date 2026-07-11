@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact - Student Portal</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="loader"><div class="ld-logo">Student<span>Portal</span></div><div class="ld-spin"></div></div>
+<div id="toasts"></div>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Student<span>Portal</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><i class="bi bi-list fs-4"></i></button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li><a class="nav-link" href="index.html">Home</a></li>
+        <li><a class="nav-link" href="index.html#about">About</a></li>
+        <li><a class="nav-link" href="index.html#courses">Courses</a></li>
+        <li><a class="nav-link" href="help.html">Help</a></li>
+        <li><a class="nav-link active" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2">
+        <button id="darkBtn" aria-label="Toggle dark mode"></button>
+        <a href="login.html" class="nav-link btn-login">Login</a>
+        <a href="register.html" class="nav-link btn-reg">Register</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="contact-hero">
+  <div class="container">
+    <span class="sec-badge" style="background:rgba(255,255,255,.15);color:#fff;">Get In Touch</span>
+    <h1 class="fw-800 mt-2 mb-2" style="font-size:2.5rem;">Contact Us</h1>
+    <p style="opacity:.88;font-size:1.1rem;">We are here to help. Reach out anytime.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <h3 class="sec-title mb-4">Get In Touch</h3>
+        <div class="contact-card">
+          <div class="cc-icon"><i class="bi bi-geo-alt"></i></div>
+          <div>
+            <div class="fw-semibold mb-1">Office Address</div>
+            <div class="text-muted small">123 University Avenue<br>Education City, ST 10001<br>United States</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon"><i class="bi bi-telephone"></i></div>
+          <div>
+            <div class="fw-semibold mb-1">Phone</div>
+            <div class="text-muted small">+1 (800) 123-4567<br>+1 (800) 765-4321</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon"><i class="bi bi-envelope"></i></div>
+          <div>
+            <div class="fw-semibold mb-1">Email</div>
+            <div class="text-muted small">support@studentportal.edu<br>info@studentportal.edu</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon"><i class="bi bi-clock"></i></div>
+          <div>
+            <div class="fw-semibold mb-1">Office Hours</div>
+            <div class="text-muted small">Mon - Fri: 9:00 AM - 5:00 PM<br>Sat: 10:00 AM - 2:00 PM</div>
+          </div>
+        </div>
+        <h6 class="mt-4 mb-3 fw-bold">Follow Us</h6>
+        <a href="#" class="soc-icon" style="background:#1877F2;"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="soc-icon" style="background:#1DA1F2;"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="soc-icon" style="background:#E1306C;"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="soc-icon" style="background:#0A66C2;"><i class="bi bi-linkedin"></i></a>
+        <a href="#" class="soc-icon" style="background:#FF0000;"><i class="bi bi-youtube"></i></a>
+      </div>
+
+      <div class="col-lg-7">
+        <h3 class="sec-title mb-4">Send a Message</h3>
+        <div class="feature-card p-4">
+          <form id="contactForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Full Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" class="form-control" placeholder="Your name" required/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" placeholder="your@email.com" required/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                  <input type="tel" class="form-control" placeholder="+1 000 000 0000"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Subject</label>
+                <select class="form-select">
+                  <option value="">Select subject</option>
+                  <option>General Inquiry</option>
+                  <option>Technical Support</option>
+                  <option>Course Information</option>
+                  <option>Billing</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Message</label>
+                <textarea class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-submit">Send Message <i class="bi bi-send ms-2"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="map-box mt-4">
+          <i class="bi bi-map"></i>
+          <p class="mb-1 fw-semibold" style="color:#1565C0;">Google Maps</p>
+          <p>123 University Avenue, Education City</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4"><div class="foot-brand mb-2">Student<span>Portal</span></div><p style="color:rgba(255,255,255,.7);font-size:.93rem;">Empowering students worldwide.</p><div class="mt-3"><a href="#" class="soc-icon"><i class="bi bi-facebook"></i></a><a href="#" class="soc-icon"><i class="bi bi-twitter-x"></i></a><a href="#" class="soc-icon"><i class="bi bi-instagram"></i></a><a href="#" class="soc-icon"><i class="bi bi-linkedin"></i></a></div></div>
+      <div class="col-6 col-lg-2"><h6>Quick Links</h6><a href="index.html" class="foot-link">Home</a><a href="help.html" class="foot-link">Help</a><a href="contact.html" class="foot-link">Contact</a><a href="login.html" class="foot-link">Login</a></div>
+      <div class="col-6 col-lg-2"><h6>Account</h6><a href="login.html" class="foot-link">Login</a><a href="register.html" class="foot-link">Register</a></div>
+      <div class="col-lg-4"><h6>Contact Info</h6><p style="color:rgba(255,255,255,.7);font-size:.92rem;"><i class="bi bi-geo-alt me-2"></i>123 University Ave, City</p><p style="color:rgba(255,255,255,.7);font-size:.92rem;"><i class="bi bi-envelope me-2"></i>support@studentportal.edu</p><p style="color:rgba(255,255,255,.7);font-size:.92rem;"><i class="bi bi-telephone me-2"></i>+1 (800) 123-4567</p></div>
+    </div>
+  </div>
+  <div class="foot-bottom"><div class="container">© 2026 StudentPortal. All rights reserved.</div></div>
+</footer>
+
+<button id="btt" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
