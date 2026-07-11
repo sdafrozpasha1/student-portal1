@@ -7,55 +7,221 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
+<style>
+  body { margin:0; font-family:'Segoe UI',sans-serif; }
+  .login-page {
+    min-height:100vh;
+    display:flex;
+    background: linear-gradient(135deg, #0D47A1 0%, #1976D2 50%, #42A5F5 100%);
+  }
+  .login-left {
+    flex:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:3rem; color:#fff;
+    display:none;
+  }
+  @media(min-width:992px){ .login-left { display:flex; } }
+  .login-left h1 { font-size:2.8rem; font-weight:900; margin-bottom:1rem; }
+  .login-left p  { font-size:1.1rem; opacity:.9; max-width:380px; line-height:1.7; }
+  .login-illustration { width:320px; margin-bottom:2rem; animation:float 3s ease-in-out infinite; }
+  @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+  .feature-pill {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.15); border-radius:50px;
+    padding:8px 18px; margin:6px; font-size:.9rem; backdrop-filter:blur(4px);
+  }
+  .login-right {
+    width:100%; max-width:480px;
+    background:#fff; display:flex; align-items:center; justify-content:center;
+    padding:2.5rem 2rem;
+    box-shadow:-20px 0 60px rgba(0,0,0,.15);
+  }
+  .login-box { width:100%; max-width:400px; }
+  .brand { font-size:1.6rem; font-weight:900; color:#0D47A1; text-decoration:none; }
+  .brand span { color:#FFC107; }
+  .login-box h2 { font-size:1.75rem; font-weight:800; color:#0D47A1; margin:1rem 0 .3rem; }
+  .login-box .sub { color:#6c757d; font-size:.93rem; margin-bottom:1.75rem; }
+  .field-label { font-weight:600; font-size:.88rem; color:#1a1a2e; margin-bottom:.4rem; display:block; }
+  .inp-wrap { position:relative; margin-bottom:1rem; }
+  .inp-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#1565C0; font-size:1rem; }
+  .inp-wrap input {
+    width:100%; padding:.75rem 1rem .75rem 2.8rem;
+    border:2px solid #e0e8f5; border-radius:12px;
+    font-size:.95rem; outline:none; transition:border .3s, box-shadow .3s;
+    background:#F8FAFF;
+  }
+  .inp-wrap input:focus { border-color:#42A5F5; box-shadow:0 0 0 3px rgba(66,165,245,.18); background:#fff; }
+  .eye-btn { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#6c757d; font-size:1rem; }
+  .err-msg { color:#ef4444; font-size:.77rem; margin-top:-6px; margin-bottom:6px; }
+  .row-between { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; }
+  .remember { display:flex; align-items:center; gap:6px; font-size:.87rem; color:#1a1a2e; }
+  .remember input { width:16px; height:16px; accent-color:#1565C0; }
+  .forgot { font-size:.87rem; color:#1565C0; text-decoration:none; font-weight:600; }
+  .forgot:hover { text-decoration:underline; }
+  .btn-login {
+    width:100%; padding:.9rem; background:linear-gradient(135deg,#1565C0,#1976D2);
+    color:#fff; border:none; border-radius:12px; font-size:1rem; font-weight:700;
+    cursor:pointer; transition:all .3s; margin-bottom:1rem;
+    box-shadow:0 4px 16px rgba(21,101,192,.35);
+  }
+  .btn-login:hover { background:linear-gradient(135deg,#0D47A1,#1565C0); transform:translateY(-2px); box-shadow:0 8px 24px rgba(21,101,192,.4); }
+  .divider { display:flex; align-items:center; gap:.75rem; margin:.75rem 0; }
+  .divider::before,.divider::after { content:''; flex:1; height:1px; background:#e0e8f5; }
+  .divider span { color:#aab; font-size:.8rem; white-space:nowrap; }
+  .btn-google {
+    width:100%; padding:.8rem; background:#fff; border:2px solid #e0e8f5;
+    border-radius:12px; font-size:.95rem; font-weight:600; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:all .3s; color:#1a1a2e;
+  }
+  .btn-google:hover { border-color:#42A5F5; box-shadow:0 4px 14px rgba(21,101,192,.15); transform:translateY(-1px); }
+  .signup-txt { text-align:center; margin-top:1.25rem; font-size:.88rem; color:#6c757d; }
+  .signup-txt a { color:#1565C0; font-weight:700; text-decoration:none; }
+  .signup-txt a:hover { text-decoration:underline; }
+  #toasts { position:fixed; top:1.5rem; right:1.5rem; z-index:9999; display:flex; flex-direction:column; gap:.5rem; }
+  .toast-n { background:#fff; border-radius:12px; padding:.85rem 1.1rem; box-shadow:0 8px 30px rgba(0,0,0,.15); display:flex; align-items:center; gap:10px; min-width:260px; border-left:4px solid #1565C0; animation:tIn .3s ease; }
+  .toast-n.ok  { border-left-color:#22c55e; }
+  .toast-n.err { border-left-color:#ef4444; }
+  @keyframes tIn { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+  #loader { position:fixed; inset:0; background:linear-gradient(135deg,#0D47A1,#42A5F5); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition:opacity .5s,visibility .5s; }
+  #loader.hide { opacity:0; visibility:hidden; pointer-events:none; }
+  .ld-logo { font-size:2rem; font-weight:800; color:#fff; margin-bottom:1rem; }
+  .ld-logo span { color:#FFC107; }
+  .ld-spin { width:44px; height:44px; border:4px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+</style>
 </head>
 <body>
+
 <div id="loader"><div class="ld-logo">Student<span>Portal</span></div><div class="ld-spin"></div></div>
 <div id="toasts"></div>
-<div class="auth-wrap">
-  <div class="form-card">
-    <div class="text-center mb-4">
-      <a href="index.html" class="navbar-brand" style="font-size:1.6rem;font-weight:800;color:#0D47A1;">Student<span style="color:#FFC107">Portal</span></a>
-      <h2 class="mt-3 mb-1">Welcome Back</h2>
-      <p class="text-muted small">Login to your student account</p>
+
+<div class="login-page">
+  <!-- Left Panel -->
+  <div class="login-left">
+    <svg class="login-illustration" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="200" cy="305" rx="160" ry="14" fill="rgba(0,0,0,0.15)"/>
+      <rect x="80" y="70" width="240" height="170" rx="14" fill="rgba(255,255,255,.95)"/>
+      <rect x="80" y="70" width="240" height="38" rx="14" fill="#1565C0"/>
+      <circle cx="102" cy="89" r="7" fill="#ff5f57"/>
+      <circle cx="122" cy="89" r="7" fill="#febc2e"/>
+      <circle cx="142" cy="89" r="7" fill="#28c840"/>
+      <rect x="100" y="125" width="160" height="10" rx="5" fill="#e8f0fe"/>
+      <rect x="100" y="145" width="120" height="10" rx="5" fill="#e8f0fe"/>
+      <rect x="100" y="165" width="140" height="10" rx="5" fill="#e8f0fe"/>
+      <rect x="100" y="185" width="100" height="10" rx="5" fill="#e8f0fe"/>
+      <rect x="100" y="210" width="70" height="24" rx="8" fill="#FFC107"/>
+      <circle cx="200" cy="55" r="36" fill="#42A5F5"/>
+      <circle cx="200" cy="43" r="16" fill="#fff"/>
+      <path d="M175 68 Q200 82 225 68" fill="#fff"/>
+    </svg>
+    <h1>Welcome Back! 👋</h1>
+    <p>Login to access your courses, track your progress, and connect with your student community.</p>
+    <div class="mt-3">
+      <span class="feature-pill"><i class="bi bi-laptop"></i> 150+ Courses</span>
+      <span class="feature-pill"><i class="bi bi-people"></i> 5000+ Students</span>
+      <span class="feature-pill"><i class="bi bi-star"></i> 98% Satisfaction</span>
     </div>
-    <form id="loginForm" novalidate>
-      <div class="mb-3">
-        <label for="loginId" class="form-label fw-600">Student ID or Email</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-person"></i></span>
-          <input type="text" id="loginId" class="form-control" placeholder="Enter your ID or email" autocomplete="username"/>
+  </div>
+
+  <!-- Right Panel - Form -->
+  <div class="login-right">
+    <div class="login-box">
+      <a href="index.html" class="brand">Student<span>Portal</span></a>
+      <h2>Sign In</h2>
+      <p class="sub">Enter your credentials to access your account</p>
+
+      <form id="loginForm" novalidate>
+        <div>
+          <label class="field-label" for="loginId">Student ID or Email</label>
+          <div class="inp-wrap">
+            <i class="bi bi-person inp-icon"></i>
+            <input type="text" id="loginId" placeholder="Enter your ID or email" autocomplete="username"/>
+          </div>
+          <div id="loginIdErr" class="err-msg"></div>
         </div>
-        <div id="loginIdErr" class="fm e"></div>
-      </div>
-      <div class="mb-3">
-        <div class="d-flex justify-content-between">
-          <label for="loginPw" class="form-label fw-600">Password</label>
-          <a href="#" class="text-primary small">Forgot Password?</a>
+
+        <div>
+          <label class="field-label" for="loginPw">Password</label>
+          <div class="inp-wrap">
+            <i class="bi bi-lock inp-icon"></i>
+            <input type="password" id="loginPw" placeholder="Enter your password" autocomplete="current-password"/>
+            <button type="button" class="eye-btn" onclick="togglePw('loginPw',this)" aria-label="Show password">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <div id="loginPwErr" class="err-msg"></div>
         </div>
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          <input type="password" id="loginPw" class="form-control" placeholder="Enter your password" autocomplete="current-password"/>
-          <button type="button" class="pass-eye" data-target="loginPw" aria-label="Show password"><i class="bi bi-eye"></i></button>
+
+        <div class="row-between">
+          <label class="remember">
+            <input type="checkbox" id="rememberMe"/> Remember me
+          </label>
+          <a href="#" class="forgot">Forgot Password?</a>
         </div>
-        <div id="loginPwErr" class="fm e"></div>
-      </div>
-      <div class="mb-4 d-flex justify-content-between align-items-center">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="rememberMe"/>
-          <label class="form-check-label small" for="rememberMe">Remember me</label>
-        </div>
-      </div>
-      <button type="submit" class="btn-submit mb-3">Login</button>
-      <div class="divider"><span>or continue with</span></div>
-      <button type="button" class="btn-google mb-3">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.8 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.8 6C12.1 13.1 17.6 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 7.1-10 7.1-17z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7.8-6A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.7 2.2-7.7 2.2-6.4 0-11.8-3.6-13.6-9.2l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>
-        Continue with Google
-      </button>
-    </form>
-    <p class="text-center small mt-2">Do not have an account? <a href="register.html" class="text-primary fw-600">Register here</a></p>
+
+        <button type="submit" class="btn-login">
+          <i class="bi bi-box-arrow-in-right me-2"></i> Login
+        </button>
+
+        <div class="divider"><span>or continue with</span></div>
+
+        <button type="button" class="btn-google" onclick="showToast('Google login coming soon!','info')">
+          <svg width="18" height="18" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.8 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.8 6C12.1 13.1 17.6 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 7.1-10 7.1-17z"/>
+            <path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7.8-6A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z"/>
+            <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.7 2.2-7.7 2.2-6.4 0-11.8-3.6-13.6-9.2l-7.8 6C6.6 42.6 14.6 48 24 48z"/>
+          </svg>
+          Continue with Google
+        </button>
+      </form>
+
+      <p class="signup-txt">Don't have an account? <a href="register.html">Create Account</a></p>
+    </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/script.js"></script>
+
+<script>
+window.addEventListener('load',()=>{ setTimeout(()=>{ const l=document.getElementById('loader'); if(l) l.classList.add('hide'); },700); });
+
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  const isPass = inp.type === 'password';
+  inp.type = isPass ? 'text' : 'password';
+  btn.innerHTML = isPass ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+}
+
+function showToast(msg, type='info') {
+  const c = document.getElementById('toasts');
+  const icons = {ok:'✅',err:'❌',info:'ℹ️'};
+  const t = document.createElement('div');
+  t.className = 'toast-n ' + (type==='ok'?'ok':type==='err'?'err':'');
+  t.innerHTML = `<span style="font-size:1.2rem">${icons[type]||'ℹ️'}</span><span style="flex:1;font-size:.88rem;font-weight:500">${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#aaa">✕</button>`;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(), 4000);
+}
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let valid = true;
+  const id = document.getElementById('loginId');
+  const pw = document.getElementById('loginPw');
+  const idErr = document.getElementById('loginIdErr');
+  const pwErr = document.getElementById('loginPwErr');
+  idErr.textContent = ''; pwErr.textContent = '';
+
+  if (!id.value.trim()) { idErr.textContent = 'Student ID or email is required'; valid = false; }
+  if (!pw.value) { pwErr.textContent = 'Password is required'; valid = false; }
+  else if (pw.value.length < 6) { pwErr.textContent = 'Minimum 6 characters'; valid = false; }
+
+  if (valid) {
+    showToast('Login successful! Welcome back ��', 'ok');
+    setTimeout(()=> window.location.href='index.html', 1500);
+  } else {
+    showToast('Please fix the errors below', 'err');
+  }
+});
+</script>
 </body>
 </html>
